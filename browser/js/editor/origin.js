@@ -566,3 +566,18 @@ $(function()
         return styles;
     }
 });
+
+//end of drag and drop from bar to iframe
+
+//nav bar operation
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+     $(".target").css("margin-left", 250);
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    $(".target").css("margin-left", 0);
+}
+//end of nav bar operation

@@ -2,9 +2,12 @@
 
 
 <section id="home">
+
   <div class="row">
+  <div id="mySidenav" class="sidenav">
   <div id="dragitemslist">
     <h3>Draggable Item List</h3>
+    <a class="closebtn" onclick="closeNav()">&times;</a>
     <div>
           <ul id="dragitemslistcontainer">
             <li draggable="true" data-insert-html="<h1>HEADER GOES HERE</h1>"><i class="fa fa-header"></i><p>Header</p></li>
@@ -12,6 +15,7 @@
             <li draggable="true" data-insert-html='<div class="well login-box"> <form action=""> <legend>Login</legend> <div class="form-group"> <label for="username-email">E-mail or Username</label> <input value="" id="username-email" placeholder="E-mail or Username" type="text" class="form-control"/> </div><div class="form-group"> <label for="password">Password</label> <input id="password" value="" placeholder="Password" type="text" class="form-control"/> </div><div class="form-group text-center"> <button class="btn btn-danger btn-cancel-action">Cancel</button> <input type="submit" class="btn btn-success btn-login-submit" value="Login"/> </div></form> </div>'><i class="fa fa-sign-in"></i><p>Login Form</p></li>
         </ul>
     </div>
+</div>
 </div>
     <button id="htmlButton" type="button" ng-click="parseHtml()" class="btn btn-primary">Save Button</button>
     <button id="htmlButton" type="button" ng-click="edit()" class="btn btn-primary">Edit Button</button>
