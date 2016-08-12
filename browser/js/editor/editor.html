@@ -1,14 +1,32 @@
+
+
+
 <section id="home">
   <div class="row">
+  <div id="dragitemslist">
+    <h3>Draggable Item List</h3>
+    <div>
+          <ul id="dragitemslistcontainer">
+            <li draggable="true" data-insert-html="<h1>HEADER GOES HERE</h1>"><i class="fa fa-header"></i><p>Header</p></li>
+            <li draggable="true" data-insert-html="<img src='http://blogs-images.forbes.com/anthonykosner/files/2014/06/us-browser-share-adobe-index-2014.jpg'>"><i class="fa fa-bar-chart"></i><p>Chart Image</p></li>
+            <li draggable="true" data-insert-html='<div class="well login-box"> <form action=""> <legend>Login</legend> <div class="form-group"> <label for="username-email">E-mail or Username</label> <input value="" id="username-email" placeholder="E-mail or Username" type="text" class="form-control"/> </div><div class="form-group"> <label for="password">Password</label> <input id="password" value="" placeholder="Password" type="text" class="form-control"/> </div><div class="form-group text-center"> <button class="btn btn-danger btn-cancel-action">Cancel</button> <input type="submit" class="btn btn-success btn-login-submit" value="Login"/> </div></form> </div>'><i class="fa fa-sign-in"></i><p>Login Form</p></li>
+        </ul>
+    </div>
+</div>
     <button id="htmlButton" type="button" ng-click="parseHtml()" class="btn btn-primary">Save Button</button>
     <button id="htmlButton" type="button" ng-click="edit()" class="btn btn-primary">Edit Button</button>
         <button id="htmlButton" type="button" ng-click="createProject({title:'testing'})" class="btn btn-primary">Create Project</button>
   </div>
   <div class="row">
     <center>
-    <div class="col-md-12">
-       <iframe id="skeleton" src="/freelancer/index.html" style="width: 1000px; height: 800px; margin: 0 auto"></iframe>
+    <div class="col-md-12" id="clientframe-container">
+       <iframe id="skeleton" src="/freelancer/index.html" style="width: 1000px; height: 800px; margin: 0 auto" frameborder="0"></iframe>
     </div>
     </center>
   </div>
 </section>
+
+
+
+<!-- //clientframe = skeleton -->
+<script src="js/editor/origin.js"></script>
