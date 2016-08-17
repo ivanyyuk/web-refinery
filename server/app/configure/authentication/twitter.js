@@ -3,63 +3,62 @@
 var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-module.exports = function (app, db) {
+module.exports = function(app, db) {
 
-    var User = db.model('user');
+  var User = db.model('user');
 
-    var config = require('../../../../config.json');
+  var config = require('../../../../config.json');
 
-    var twitterCredentials = {
-        consumerKey: config[2].twitterConfig.consumerKey,
-        consumerSecret: config[2].twitterConfig.consumerSecret,
-        callbackUrl: config[2].twitterConfig.callbackUrl
-    };
+  var twitterCredentials = {
+    consumerKey: config[2].twitterConfig.consumerKey,
+    consumerSecret: config[2].twitterConfig.consumerSecret,
+    callbackUrl: config[2].twitterConfig.callbackUrl
+  };
 
-    // var createNewUser = function (token, tokenSecret, profile) {
-    //     console.log(profile);
-    //     return User.create({
-    //         twitter_id: profile.id
-    //     });
-    // };
+  // var createNewUser = function (token, tokenSecret, profile) {
+  //     console.log(profile);
+  //     return User.create({
+  //         twitter_id: profile.id
+  //     });
+  // };
 
-    var verifyCallback = function (token, tokenSecret, profile, done) {
-        console.log("TWITTER!!!!", profile);
-        UserModel.findOne({
-            where: {
-                twitter_id: profile.id
-            }
-        }).exec()
-            .then(function (user) {
-                if (user) { // If a user with this twitter id already exists.
-                    return user;
-                } else { // If this twitter id has never been seen before and no user is attached.
-                    let first = profile.split(" ");
-                    return User.create({
-                       first_name: first[0],
-                       last_name: first[1],
-//                        email: profile.username +'@gmail.com',
-                       twitter_id: profile.id
-                    })
-                }
-            })
-            .then(function (user) {
-                done(null, user);
-            })
-            .catch(function (err) {
-                console.error('Error creating user from Twitter authentication', err);
-                done(err);
-            });
+  var verifyCallback = function(token, tokenSecret, profile, done) {
+    User.findOne({
+        where: {
+          twitter_id: profile.id
+        }
+      })
+      .then(function(user) {
+        if (user) { // If a user with this twitter id already exists.
+          return user;
+        } else { // If this twitter id has never been seen before and no user is attached.
+          let first = profile.displayName.split(" ");
+          return User.create({
+            first_name: first[0],
+            last_name: first[1],
+            email: profile.username + '@gmail.com',
+            twitter_id: profile.id
+          })
+        }
+      })
+      .then(function(user) {
+        done(null, user);
+      })
+      .catch(function(err) {
+        console.error('Error creating user from Twitter authentication', err);
+        done(err);
+      });
 
-    };
+  };
 
-    passport.use(new TwitterStrategy(twitterCredentials, verifyCallback));
+  passport.use(new TwitterStrategy(twitterCredentials, verifyCallback));
 
-    app.get('/auth/twitter', passport.authenticate('twitter'));
+  app.get('/auth/twitter', passport.authenticate('twitter'));
 
-    app.get('/auth/twitter/callback',
-        passport.authenticate('twitter', {failureRedirect: '/login'}),
-        function (req, res) {
-            res.redirect('/');
-        });
+  app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect('/');
+    });
 
 };
