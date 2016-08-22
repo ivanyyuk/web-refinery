@@ -1,8 +1,21 @@
 //Changed Code -
 //$(clientFrameWindow.document.body).find('.reserved-drop-marker').remove();
 //$(event.target).append("<p class='reserved-drop-marker'></p>");
-
+var undoArray = []
 $(function(){
+
+    // first push to undo array
+$("#skeleton").on("load", function(){
+var clientFrameWindow = $('#skeleton').get(0).contentWindow;
+   var beforeHtml = $('#skeleton').contents().find("body").html();
+    var html = "<body>\n" + beforeHtml + "</body>";
+    undoArray.push(html)
+    console.log("this is the beginning",undoArray)
+})
+    //end of first push to undo array
+
+
+
 
     var currentElement,currentElementChangeFlag,elementRectangle,countdown,dragoverqueue_processtimer, elementToRemove;
 
@@ -11,6 +24,9 @@ $(function(){
     $("#dragitemslistcontainer").on('dragstart', function(event) {
         var insertingHTML;
         // console.log("Drag Started");
+
+
+
 
         ///<[a-z][\s\S]*>/i.test(e.dataTransfer.getData('text'))
         insertingHTML = $(event.target).attr('data-insert-html')
@@ -29,7 +45,7 @@ $(function(){
     });
 
     $("#dragitemslistcontainer").on('dragend', function() {
-        // console.log("Drag End");
+         console.log("Drag End");
         // Cancels action that was setup with setInterval
         clearInterval(dragoverqueue_processtimer);
 
@@ -38,6 +54,26 @@ $(function(){
         // container that you're dropping the data in (green).
         DragDropFunctions.removePlaceholder();
         DragDropFunctions.ClearContainerContext();
+console.log("outside drop event")
+
+//START OF undo function
+var clientFrameWindow = $('#skeleton').get(0).contentWindow;
+var beforeHtml = $('#skeleton').contents().find("body").html();
+var html = "<body>\n" + beforeHtml + "</body>";
+
+var addToArray = function() {
+// saves HTML to array
+if(undoArray.length > 10){
+undoArray.pop();
+undoArray.push(html);
+}
+
+undoArray.push(html);
+console.log(undoArray);
+
+}
+addToArray()
+//END of Undo Function
 
         //re runs the edit() function on our controller on every drop
         //to recheck all the elements and make them editable
@@ -71,12 +107,29 @@ $(function(){
         });
 
         htmlBody.on('dragend', function(event) {
-
             // Cancels action that was setup with setInterval
             clearInterval(dragoverqueue_processtimer);
-
             DragDropFunctions.removePlaceholder();
             DragDropFunctions.ClearContainerContext();
+            //START OF undo function
+var clientFrameWindow = $('#skeleton').get(0).contentWindow;
+var beforeHtml = $('#skeleton').contents().find("body").html();
+var html = "<body>\n" + beforeHtml + "</body>";
+
+var addToArray = function() {
+// saves HTML to array
+if(undoArray.length > 10){
+undoArray.pop();
+undoArray.push(html);
+}
+
+undoArray.push(html);
+console.log(undoArray);
+
+}
+addToArray()
+//END of Undo Function
+
             elementToRemove.remove();
             angular.element(document.getElementsByTagName('element-menu')[0]).scope().edit();
         });
@@ -110,11 +163,16 @@ $(function(){
         })
 
         // Event that's first called when you drop an item into the iframe
-        $(clientFrameWindow.document).find('body,html').on('drop', function(event) {
+        $(clientFrameWindow.document).find('body,html, button').on('drop', function(event) {
+             var clientFrameWindow = $('#skeleton').get(0).contentWindow;
+               var beforeHtml = $('#skeleton').contents().find("body").html();
             event.preventDefault();
             event.stopPropagation();
-            console.log('Drop event');
+            console.log('inside Drop event');
+            var html = "<html>\n" + beforeHtml + "</html>";
             var e;
+
+
             if (event.isTrigger)
                 e = triggerEvent.originalEvent;
             else
@@ -123,12 +181,16 @@ $(function(){
                 // dataTransfer setData added in dragstart event
                 if (/<[a-z][\s\S]*>/i.test(e.dataTransfer.getData('text'))) {
                     var textData = e.dataTransfer.getData('text');
+
                 }
                 else {
+
                     console.log('==== Something went wrong ====');
                     console.log(e);
                     console.log('==============================');
                     var textData = e.dataTransfer.getData('text');
+                           $("#skeleton").contents().find(".drop-marker").remove();
+
                 }
                 var insertionPoint = $("#skeleton").contents().find(".drop-marker");
                 var checkDiv = $(textData);
@@ -138,6 +200,8 @@ $(function(){
             } catch(e) {
                 console.log(e);
             }
+
+
         });
     });
 
