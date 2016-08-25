@@ -1,3 +1,43 @@
+[data-sr] {
+  visibility: hidden;
+  color: #333
+}
+
+
+
+#simple {
+  text-align: left;
+  margin-top: 30%;
+  right: 10%;
+  // font-family: 'Avenir Next', 'sans-serif';
+  // font-weight: 100 !important;
+}
+
+#firstanimation {
+  margin-top: 28%;
+  margin-left: 10%;
+  margin-right: 0px;
+  position: relative;
+  transform: translateY(-50%);
+  font-size: 100px;
+  font-family: 'Avenir Next', 'sans-serif';
+  font-weight: 100 !important;
+  text-align: left;
+  letter-spacing: .1px;
+  #imagebottom {
+    position: absolute;
+    margin-top: 5%;
+  }
+}
+
+#secondanimation {
+  text-align: center;
+  font-family: 'effra', 'proxima';
+  bottom: 45vh;
+  background-color: #32cdc7;
+  color: white;
+}
+
 .modal-content-home {
   background-color: transparent !important;
   text-align: center;
